@@ -1,36 +1,27 @@
-name: Deploy Notebooks to Artifactory and Databr
+name: Publish Python Notebooks to JFrog Artifactory
 
 on:
   push:
-    branches: [ develop ]
-
-env:
-  ARTIFACTORY_URL: https://durga1212.jfrog.io/artifactory/pypi-local/
-  ARTIFACTORY_REPO: https://durga1212.jfrog.io/artifactory/api/pypi/pypi-local
-  ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
-  ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-  DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-  DATABRICKS_HOST: https://adb-5630925069180830.10.azuredatabricks.net
+    branches:
+      - main
 
 jobs:
-  build-and-deploy:
+  publish:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
 
       - name: Install dependencies
         run: |
-          python -m pip install nbconvert
-          python -m pip install jfrog-artifactory
+          pip install jfrog-artifactory
 
-      - name: Convert notebooks to HTML and PDF
-        run: |
-          jupyter nbconvert --to html --output-dir . notebooks/*.ipynb
-          jupyter nbconvert --to pdf --output-dir . notebooks/*.ipynb
-
-      - name: Upload files to Artifactory
+      - name: Publish notebooks to JFrog Artifactory
         uses: jfrog/artifactory-upload-action@v2
         with:
           server-id: default
@@ -38,19 +29,9 @@ jobs:
             {
               "files": [
                 {
-                  "pattern": "*.html",
-                  "target": "${{ env.ARTIFACTORY_REPO }}/html/"
-                },
-                {
-                  "pattern": "*.pdf",
-                  "target": "${{ env.ARTIFACTORY_REPO }}/pdf/"
+                  "pattern": "notebooks/*.ipynb",
+                  "target": "notebooks/"
                 }
               ]
             }
-
-      
-          target: /dbfs/FileStore/notebooks/
-          username: ${{ env.ARTIFACTORY_USERNAME }}
-          password: ${{ env.ARTIFACTORY_PASSWORD }}
-
-    
+          fail-fast: true
