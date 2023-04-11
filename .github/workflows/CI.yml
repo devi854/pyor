@@ -48,23 +48,7 @@ jobs:
               ]
             }
 
-      - name: Download files from Artifactory to Databricks
-        uses: jfrog/artifactory-generic-download-action@v1
-        with:
-          server-id: default
-          spec: |
-            {
-              "files": [
-                {
-                  "pattern": "${{ env.ARTIFACTORY_REPO }}/html/*.html",
-                  "target": "notebooks/html/"
-                },
-                {
-                  "pattern": "${{ env.ARTIFACTORY_REPO }}/pdf/*.pdf",
-                  "target": "notebooks/pdf/"
-                }
-              ]
-            }
+      
           target: /dbfs/FileStore/notebooks/
           username: ${{ env.ARTIFACTORY_USERNAME }}
           password: ${{ env.ARTIFACTORY_PASSWORD }}
