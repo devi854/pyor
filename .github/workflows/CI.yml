@@ -1,4 +1,4 @@
-name: Deploy Notebooks to Artifactory and Databricks
+name: Deploy Notebooks to Artifactory and Databr
 
 on:
   push:
