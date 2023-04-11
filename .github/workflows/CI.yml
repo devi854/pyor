@@ -1,5 +1,72 @@
-name: CI
+name: Deploy Notebooks to Artifactory and Databricks
+
 on:
   push:
     branches: [ develop ]
+
+env:
+  ARTIFACTORY_URL: https://durga1212.jfrog.io/artifactory/pypi-local/
+  ARTIFACTORY_REPO: https://durga1212.jfrog.io/artifactory/api/pypi/pypi-local
+  ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+  ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+  DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+  DATABRICKS_HOST: https://adb-5630925069180830.10.azuredatabricks.net
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          python -m pip install nbconvert
+          python -m pip install jfrog-artifactory
+
+      - name: Convert notebooks to HTML and PDF
+        run: |
+          jupyter nbconvert --to html --output-dir . notebooks/*.ipynb
+          jupyter nbconvert --to pdf --output-dir . notebooks/*.ipynb
+
+      - name: Upload files to Artifactory
+        uses: jfrog/artifactory-upload-action@v2
+        with:
+          server-id: default
+          spec: |
+            {
+              "files": [
+                {
+                  "pattern": "*.html",
+                  "target": "${{ env.ARTIFACTORY_REPO }}/html/"
+                },
+                {
+                  "pattern": "*.pdf",
+                  "target": "${{ env.ARTIFACTORY_REPO }}/pdf/"
+                }
+              ]
+            }
+
+      - name: Download files from Artifactory to Databricks
+        uses: jfrog/artifactory-generic-download-action@v1
+        with:
+          server-id: default
+          spec: |
+            {
+              "files": [
+                {
+                  "pattern": "${{ env.ARTIFACTORY_REPO }}/html/*.html",
+                  "target": "notebooks/html/"
+                },
+                {
+                  "pattern": "${{ env.ARTIFACTORY_REPO }}/pdf/*.pdf",
+                  "target": "notebooks/pdf/"
+                }
+              ]
+            }
+          target: /dbfs/FileStore/notebooks/
+          username: ${{ env.ARTIFACTORY_USERNAME }}
+          password: ${{ env.ARTIFACTORY_PASSWORD }}
+
     
