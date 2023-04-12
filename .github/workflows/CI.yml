@@ -32,6 +32,6 @@ jobs:
           
       - name: upload Package
         run: |
-          python3 setup.py sdist upload -r local
+          python3 setupcfg.py sdist upload -r local
           
 
