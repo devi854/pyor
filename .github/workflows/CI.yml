@@ -30,8 +30,14 @@ jobs:
           ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
           URL: https://durga1212.jfrog.io/artifactory/api/pypi/pypi
           
+      - name: Zip
+        run: |
+          mkdir new/release
+          cd ./new/release
+          zip -r test.zip ./
+          
       - name: upload Package
         run: |
-          python setup.py sdist upload -r local
+          jfrog rt u ./new/release/test.zip pypi/ght/ --build-name=my-build --build-number=${{ github.run_number }}
           
 
