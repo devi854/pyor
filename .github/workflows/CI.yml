@@ -3,35 +3,35 @@ name: Publish Python Notebooks to JFrog Artifactory
 on:
   push:
     branches:
-      - main
+      - develop
+env:
+  DATABRICKS_HOST: https://adb-5630925069180830.10.azuredatabricks.net
+  ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+  ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+  URL: https://durga1212.jfrog.io/artifactory/api/pypi/pypi
+  
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4.5.0
         with:
-          python-version: 3.8
-
-      - name: Install dependencies
+          python-version: 3.9.5
+        
+      - name: setup JFrog CLI
+        uses: jfrog/setup-jfrog-cli@v3.2.0
+        env:
+          ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+          URL: https://durga1212.jfrog.io/artifactory/api/pypi/pypi
+          
+      - name: upload Package
         run: |
-          pip install jfrog-artifactory
+          python3 setup.py sdist upload -r local
+          
 
-      - name: Publish notebooks to JFrog Artifactory
-        uses: jfrog/artifactory-upload-action@v2
-        with:
-          server-id: default
-          spec: |
-            {
-              "files": [
-                {
-                  "pattern": "notebooks/*.ipynb",
-                  "target": "notebooks/"
-                }
-              ]
-            }
-          fail-fast: true
