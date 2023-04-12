@@ -32,8 +32,7 @@ jobs:
           
       - name: Zip
         run: |
-          mkdir new/release
-          cd ./new/release
+          cd ./bin/Release
           zip -r test.zip ./
           
       - name: upload Package
