@@ -22,6 +22,9 @@ jobs:
         uses: actions/setup-python@v4.5.0
         with:
           python-version: 3.8
+          
+      - name: Zip files
+        run: zip -r archive.zip test.py
         
       - name: setup JFrog CLI
         uses: jfrog/setup-jfrog-cli@v3.2.0
@@ -30,10 +33,6 @@ jobs:
           ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
           URL: https://durga1212.jfrog.io/artifactory/api/pypi/pypi
           
-      - name: Zip
-        run: |
-          cd ./bin/Release
-          zip -r test.zip ./
           
       - name: upload Package
         run: |
