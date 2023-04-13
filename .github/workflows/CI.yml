@@ -26,6 +26,10 @@ jobs:
       - name: Zip files
         run: zip -r archive.zip . -i test.py
         
+      - name: Zip repository contents
+        run: |
+          zip -r myrepo.zip .          
+        
       - name: setup JFrog CLI
         uses: jfrog/setup-jfrog-cli@v3.2.0
         env:
