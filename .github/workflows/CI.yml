@@ -24,7 +24,7 @@ jobs:
           python-version: 3.8
           
       - name: Zip files
-        run: zip -r archive.zip test.py
+        run: zip -r archive.zip . -i test.py
         
       - name: setup JFrog CLI
         uses: jfrog/setup-jfrog-cli@v3.2.0
