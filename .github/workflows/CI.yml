@@ -41,11 +41,11 @@ jobs:
         env:
           ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-          URL: https://durga1212.jfrog.io
+          URL: https://durga1212.jfrog.io/artifactory/generic-release
           
           
       - name: upload Package
         run: |
-          jfrog rt u myrepo.zip generic-release --url=https://durga1212.jfrog.io --build-name=my-build --build-number=${{ github.run_number }}
+          jfrog rt u myrepo.zip generic-release --url=https://durga1212.jfrog.io/artifactory/generic-release/ --build-name=my-build --build-number=${{ github.run_number }}
           
 
