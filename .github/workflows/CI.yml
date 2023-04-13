@@ -35,16 +35,17 @@ jobs:
         with:
           name: myrepo
           path: myrepo.zip
-    #  - name: setup JFrog CLI
-     #   uses: jfrog/setup-jfrog-cli@v3.2.0
-    #    env:
-     #     ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
-     #     ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-      #    URL: https://durga1212.jfrog.io/artifactory/api/pypi/pypi
+          
+      - name: setup JFrog CLI
+        uses: jfrog/setup-jfrog-cli@v3.2.0
+        env:
+          ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+          URL: https://durga1212.jfrog.io/artifactory/api/pypi/pypi
           
           
-    #  - name: upload Package
-    #    run: |
-       #   jfrog rt u ./new/release/test.zip pypi/ght/ --build-name=my-build --build-number=${{ github.run_number }}
+      - name: upload Package
+        run: |
+          jfrog rt u myrepo.zip generic-release  --build-name=my-build --build-number=${{ github.run_number }}
           
 
