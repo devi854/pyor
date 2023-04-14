@@ -55,7 +55,8 @@ jobs:
           
       - name: download artifact from jfrog
         run: |
-          jfrog rt download --url=https://durga1212.jfrog.io/artifactory/generic-release/folder.zip ./
+          #jfrog rt download --url=https://durga1212.jfrog.io/artifactory/generic-release/folder.zip ./
+          curl -dprasadkesari329.dk@gmail.com:$ARTIFACTORY_PASSWORD -T folder.zip "https://durga1212.jfrog.io/artifactory/generic-release/"
           
       - name: Install unzip
         run: sudo apt-get install unzip
