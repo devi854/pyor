@@ -32,7 +32,7 @@ jobs:
         
       - name: Zip repository contents
         run: |
-          zip -r folder.zip folder/notebooks          
+          zip -r folder.zip notebooks/        
         
       - name: Upload artifact
         uses: actions/upload-artifact@v2
