@@ -23,18 +23,22 @@ jobs:
         with:
           python-version: 3.8
           
+      - name: Install zip
+        run: sudo apt-get install zip
+
+          
       - name: Zip files
         run: zip -r archive.zip . -i test.py
         
       - name: Zip repository contents
         run: |
-          zip -r databrickscode.zip .          
+          zip -r folder.zip folder/notebooks          
         
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: myrepo
-          path: databrickscode.zip
+          path: folder.zip
           
       - name: setup JFrog CLI
         uses: jfrog/setup-jfrog-cli@v3.2.0
