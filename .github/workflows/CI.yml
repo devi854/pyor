@@ -50,6 +50,6 @@ jobs:
           
       - name: upload Package
         run: |
-          jfrog rt u folder.zip generic-release --url=https://durga1212.jfrog.io --recursive=false --flat=false --build-name=my-build --build-number=${{ github.run_number }}
+          jfrog rt u folder.zip generic-release --url=https://durga1212.jfrog.io/artifactory/generic-release/ --recursive=false --flat=false --build-name=my-build --build-number=${{ github.run_number }}
           
 
