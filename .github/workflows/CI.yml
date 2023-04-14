@@ -51,6 +51,6 @@ jobs:
       - name: upload Package
         run: |
          # jfrog rt u folder.zip generic-release --url=https://durga1212.jfrog.io/artifactory/ --recursive=false --flat=false --build-name=my-build --build-number=${{ github.run_number }}
-          curl -uprasadkesari329.dk@gmail.com:$ARTIFACTORY_PASSWORD -T vnb "https://durga1212.jfrog.io/artifactory/generic-release/folder.zip"
+          curl -uprasadkesari329.dk@gmail.com:$ARTIFACTORY_PASSWORD -T folder.zip "https://durga1212.jfrog.io/artifactory/generic-release/"
           
 
