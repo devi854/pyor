@@ -1,0 +1,30 @@
+name: release
+on:
+  push:
+    branchesh: [ develop ]
+    
+jobs:
+  version release:
+    runs-on: ubuntu-latest
+    
+    steps: 
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        
+    - name: version 
+      uses: paulhatch/semantic-version@v5.0.2
+      with:
+        tag_prefix: "v"
+        major_pattern: "(MAJOR)"
+        major_regexp_flags: ""
+        major_regexp_flags: ""
+        minor_regexp_flags: ""
+        version_format: "${major}.${minor}.${patch}-prerelease${increment}"
+        namespace: my-service
+        bump_each_commit: false
+        search_commit_body: false
+        user_format_type: "csv"
+        enable_prerelease_mode: true
+          
