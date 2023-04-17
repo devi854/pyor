@@ -1,10 +1,10 @@
 name: release
 on:
   push:
-    branchesh: [ develop ]
+    branches: [ develop ]
     
 jobs:
-  version release:
+  CI:
     runs-on: ubuntu-latest
     
     steps: 
