@@ -1,0 +1,70 @@
+name: Publish Python Notebooks to JFrog Artifactory
+
+on:
+  push:
+    branches:
+      - develop
+env:
+  DATABRICKS_HOST: https://adb-5630925069180830.10.azuredatabricks.net
+  ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+  ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+
+  
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4.5.0
+        with:
+          python-version: 3.8
+          
+      - name: Install zip
+        run: sudo apt-get install zip
+
+          
+      - name: Zip files
+        run: zip -r archive.zip . -i test.py
+        
+      - name: Zip repository contents
+        run: |
+          zip -r folder.zip notebooks/ resources/       
+        
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: myrepo
+          path: folder.zip
+          
+      - name: setup JFrog CLI
+        uses: jfrog/setup-jfrog-cli@v3.2.0
+        env:
+          ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+          URL: https://durga1212.jfrog.io
+          
+          
+      - name: upload Package
+        run: |
+         # jfrog rt u folder.zip generic-release --url=https://durga1212.jfrog.io/artifactory/ --recursive=false --flat=false --build-name=my-build --build-number=${{ github.run_number }}
+          curl -uprasadkesari329.dk@gmail.com:$ARTIFACTORY_PASSWORD -T folder.zip "https://durga1212.jfrog.io/artifactory/generic-release/"
+          
+    #  - name: download artifact from jfrog
+    #    run: |
+          #jfrog rt download --url=https://durga1212.jfrog.io/artifactory/generic-release/folder.zip ./
+    #      curl -dprasadkesari329.dk@gmail.com:$ARTIFACTORY_PASSWORD -T folder.zip "https://durga1212.jfrog.io/artifactory/generic-release/"
+          
+    #  - name: Install unzip
+    #    run: sudo apt-get install unzip
+
+          
+     # - name: unzip
+     #   run: unzip folder.zip 
+     #     user_input = input(" yes ")
+
+          
+
