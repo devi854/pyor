@@ -53,18 +53,18 @@ jobs:
          # jfrog rt u folder.zip generic-release --url=https://durga1212.jfrog.io/artifactory/ --recursive=false --flat=false --build-name=my-build --build-number=${{ github.run_number }}
           curl -uprasadkesari329.dk@gmail.com:$ARTIFACTORY_PASSWORD -T folder.zip "https://durga1212.jfrog.io/artifactory/generic-release/"
           
-      - name: download artifact from jfrog
-        run: |
+    #  - name: download artifact from jfrog
+    #    run: |
           #jfrog rt download --url=https://durga1212.jfrog.io/artifactory/generic-release/folder.zip ./
-          curl -dprasadkesari329.dk@gmail.com:$ARTIFACTORY_PASSWORD -T folder.zip "https://durga1212.jfrog.io/artifactory/generic-release/"
+    #      curl -dprasadkesari329.dk@gmail.com:$ARTIFACTORY_PASSWORD -T folder.zip "https://durga1212.jfrog.io/artifactory/generic-release/"
           
-      - name: Install unzip
-        run: sudo apt-get install unzip
+    #  - name: Install unzip
+    #    run: sudo apt-get install unzip
 
           
-      - name: unzip
-        run: unzip folder.zip 
-          user_input = input(" yes ")
+     # - name: unzip
+     #   run: unzip folder.zip 
+     #     user_input = input(" yes ")
 
           
 
