@@ -1,6 +1,7 @@
 pr:
   branches:
     include:
+      - feature-0001
      
 trigger:
   branches: 
