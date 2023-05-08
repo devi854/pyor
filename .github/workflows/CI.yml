@@ -1,9 +1,7 @@
 name: Publish Python Notebooks to JFrog Artifactory
 
 on:
-  push:
-    branches:
-      - feature-0001
+  
   pull_request:
     branches:
       - feature-0001
