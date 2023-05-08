@@ -5,6 +5,7 @@ on:
   pull_request:
     branches:
       - feature-0001
+      - main
      
 env:
   DATABRICKS_HOST: https://adb-5630925069180830.10.azuredatabricks.net
