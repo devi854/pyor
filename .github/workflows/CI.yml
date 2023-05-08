@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - feature-0001
+  pull_request:
+    branches:
+      - main
+     
 env:
   DATABRICKS_HOST: https://adb-5630925069180830.10.azuredatabricks.net
   ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
