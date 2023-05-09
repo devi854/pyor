@@ -8,7 +8,7 @@ on:
     
      
 env:
-  INSTANCE_POOL_ID: src/123.txt
+  INSTANCE_POOL_ID: scp/123.sh
 
   
 
