@@ -20,5 +20,7 @@ jobs:
         
       - name: test
         run: |
+          chmod u+rw /scp/123.sh
+
           instance_pool_id="$( scp/123.sh )"
           
