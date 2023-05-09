@@ -7,8 +7,7 @@ on:
       - feature-0001
     
      
-env:
-  INSTANCE_POOL_ID: scp/123.sh
+
 
   
 
@@ -21,5 +20,5 @@ jobs:
         
       - name: test
         run: |
-          instance_pool_id: ${{ env.INSTANCE_POOL_ID }}
+          instance_pool_id="$( scp/123.sh )"
           
