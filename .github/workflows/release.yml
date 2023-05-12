@@ -1,7 +1,7 @@
 name: release
 on:
-  push:
-    branches: [ main ]
+  pull_request:
+    branches: [ feature-0001 ]
     
 jobs:
    release:

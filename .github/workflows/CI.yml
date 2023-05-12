@@ -1,9 +1,12 @@
 name: Publish Python Notebooks to JFrog Artifactory
 
 on:
-  push:
+  
+  pull_request:
     branches:
-      - feature-0001
+      - main
+    types: [opened, synchronize]
+     
 env:
   DATABRICKS_HOST: https://adb-5630925069180830.10.azuredatabricks.net
   ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
