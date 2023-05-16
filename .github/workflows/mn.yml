@@ -22,6 +22,8 @@ jobs:
           echo "Working directory changed to ./new-proj"
       - name: .Net Build
         uses: EasyDesk/action-dotnet-build@v1.0.0
+        with:
+          path: './new-proj/'
           
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
