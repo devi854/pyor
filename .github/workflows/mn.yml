@@ -20,4 +20,17 @@ jobs:
         run: |
           cd ./new-proj
           echo "Working directory changed to ./new-proj"
+      - name: .Net Build
+        uses: EasyDesk/action-dotnet-build@v1.0.0
+          
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '5.0.202'
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release
+      - name: Publish
+        run: dotnet publish --no-restore --configuration Release --output publish
           
