@@ -20,7 +20,7 @@ jobs:
       - name: directory
         run: pwd
       - name: Change working directory
-        working-directory: /new-proj
+        working-directory: /home/runner/work/pyor/pyor/new-proj
         run: Tailspin.SpaceGame.Web.csproj
           
       - name: .Net Build
