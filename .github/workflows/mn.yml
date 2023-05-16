@@ -3,8 +3,8 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'new-proj/**'
+   # paths:
+   #   - 'new-proj/**'
  
   
 jobs:
@@ -13,9 +13,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          submodules: 'recursive'
-          path: './new-proj'
+        #with:
+        #  submodules: 'recursive'
+        #  path: './new-proj'
           
       - name: directory
         run: pwd
@@ -23,8 +23,7 @@ jobs:
           
       - name: .Net Build
         uses: EasyDesk/action-dotnet-build@v1.0.0
-        with:
-          path: '/home/runner/work/pyor/pyor/new-proj'
+        
           
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
