@@ -15,4 +15,9 @@ jobs:
         uses: actions/checkout@v3
         with:
           submodules: 'recursive'
-          path: 'new-proj'
+          path: './new-proj'
+      - name: Change working directory
+        run: |
+          cd ./new-proj
+          echo "Working directory changed to ./new-proj"
+          
