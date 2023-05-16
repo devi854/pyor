@@ -16,6 +16,9 @@ jobs:
         with:
           submodules: 'recursive'
           path: './new-proj'
+          
+      - name: directory
+        run: pwd
       - name: Change working directory
         working-directory: /new-proj
         run: Tailspin.SpaceGame.Web.csproj
