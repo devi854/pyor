@@ -17,9 +17,9 @@ jobs:
           submodules: 'recursive'
           path: './new-proj'
       - name: Change working directory
-        run: |
-          cd ./new-proj
-          echo "Working directory changed to ./new-proj"
+        working-directory: ./pyor/new-proj
+        run: Tailspin.SpaceGame.Web.csproj
+          
       - name: .Net Build
         uses: EasyDesk/action-dotnet-build@v1.0.0
         with:
