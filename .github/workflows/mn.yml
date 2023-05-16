@@ -17,7 +17,7 @@ jobs:
           submodules: 'recursive'
           path: './new-proj'
       - name: Change working directory
-        working-directory: ./pyor/new-proj
+        working-directory: /new-proj
         run: Tailspin.SpaceGame.Web.csproj
           
       - name: .Net Build
