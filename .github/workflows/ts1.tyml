@@ -1,0 +1,29 @@
+name: Deployment Workflow
+
+on:
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check PR Author
+        run: |
+          # Define the two authorized users who can deploy
+          authorized_users=("user1" "user2")
+          
+          # Get the author of the pull request
+          pr_author=$(jq --raw-output .pull_request.user.login "$GITHUB_EVENT_PATH")
+          
+          # Check if the author is in the list of authorized users
+          if [[ ! " ${authorized_users[@]} " =~ " ${pr_author} " ]]; then
+            echo "Unauthorized user: $pr_author"
+            echo "::set-output name=status::unauthorized"
+            exit 1
+          fi
+
+          echo "Authorized user: $pr_author"
+          echo "::set-output name=status::authorized"
