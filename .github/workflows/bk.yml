@@ -12,7 +12,7 @@ env:
 
 jobs:
   production-deploy:
-    if: ${{ github.event.pull_request.user.login == env.PRASAD_USERNAME }}
+    if: ${{ github.event.pull_request.user.login == "${{ env.PRASAD_USERNAME }}" }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
