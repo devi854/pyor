@@ -3,16 +3,13 @@ on:
   pull_request:
     branches:
       - main
-    types:
-      - opened
-      - synchronize
 
 env:
-  PRASAD_USERNAME: ${{ secrets.PRASAD_USERNAME }}
+  github.event.pull_request.user.login: ${{ secrets.PRASAD_USERNAME }}
 
 jobs:
   production-deploy:
-    if: ${{ github.event.pull_request.user.login == env.PRASAD_USERNAME }}
+    if: ${{ env.github.event.pull_request.user.login ==  github.event.pull_request.user.login }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
