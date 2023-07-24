@@ -1,0 +1,23 @@
+name: deploy
+on:
+  pull_request:
+    branches:
+      - target-branch
+    types:
+      - opened
+      - synchronize
+
+env:
+  PRASAD_USERNAME: ${{ secrets.PRASAD_USERNAME }}
+
+jobs:
+  production-deploy:
+    if: ${{ github.event.pull_request.user.login == env.PRASAD_USERNAME }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+      - run: npm install -g bats
+      # Add your production deployment steps here
