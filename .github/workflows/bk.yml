@@ -1,23 +1,28 @@
-name: deploy
+name: Greeting on variable day
+
 on:
-  pull_request:
-    branches:
-      - main
-    types:
-      - opened
-      - synchronize
+  workflow_dispatch
 
 env:
   PRASAD_USERNAME: ${{ secrets.PRASAD_USERNAME }}
 
 jobs:
-  production-deploy:
-    if: ${{ github.event.pull_request.user.login == env.PRASAD_USERNAME }}
+  greeting_job:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '14'
-      - run: npm install -g bats
-      # Add your production deployment steps here
+      - name: "Check if authorized user"
+        run: |
+          if [[ "${GITHUB_EVENT_NAME}" == "pull_request" && "${GITHUB_EVENT_PATH}" ]]; then
+            pr_author=$(jq -r ".pull_request.user.login" "${GITHUB_EVENT_PATH}")
+            if [[ "$pr_author" == "${PRASAD_USERNAME}" ]]; then
+              echo "Authorized user: $pr_author"
+              echo "::set-env name=AUTHORIZED_USER::true" # Set environment variable if authorized
+            else
+              echo "Unauthorized user: $pr_author"
+              echo "::set-env name=AUTHORIZED_USER::false" # Set environment variable if unauthorized
+            fi
+          fi
+
+      - name: "Say Hello Mona it's Monday"
+        if: env.AUTHORIZED_USER == 'true'
+        run: echo "Hello Mona. Today is Monday!"
