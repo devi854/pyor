@@ -5,11 +5,11 @@ on:
       - main
 
 env:
-  PRASAD_USERNAME: ${{ secrets.PRASAD_USERNAME }}
+  github.event.pull_request.user.login: ${{ secrets.PRASAD_USERNAME }}
 
 jobs:
   production-deploy:
-    if: ${{ env.PRASAD_USERNAME ==  github.event.pull_request.user.login }}
+    if: ${{ env.github.event.pull_request.user.login ==  github.event.pull_request.user.login }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
