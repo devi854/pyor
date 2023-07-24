@@ -2,7 +2,7 @@ name: deploy
 on:
   pull_request:
     branches:
-      - target-branch
+      - main
     types:
       - opened
       - synchronize
