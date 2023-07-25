@@ -1,28 +1,21 @@
-name: Greeting on variable day
+name: PR Authorization Check
 
 on:
-  workflow_dispatch
-
-env:
-  PRASAD_USERNAME: ${{ secrets.PRASAD_USERNAME }}
+  pull_request:
+    types:
+      - opened
+      - synchronize
 
 jobs:
-  greeting_job:
+  check_authorization:
     runs-on: ubuntu-latest
     steps:
-      - name: "Check if authorized user"
+      - name: Check Authorization
         run: |
-          if [[ "${GITHUB_EVENT_NAME}" == "pull_request" && "${GITHUB_EVENT_PATH}" ]]; then
-            pr_author=$(jq -r ".pull_request.user.login" "${GITHUB_EVENT_PATH}")
-            if [[ "$pr_author" == "${PRASAD_USERNAME}" ]]; then
-              echo "Authorized user: $pr_author"
-              echo "::set-env name=AUTHORIZED_USER::true" # Set environment variable if authorized
-            else
-              echo "Unauthorized user: $pr_author"
-              echo "::set-env name=AUTHORIZED_USER::false" # Set environment variable if unauthorized
-            fi
+          authorized_users=("prasad" "john_doe") # Add the GitHub usernames of authorized users here
+          pr_author=$(jq -r ".pull_request.user.login" "$GITHUB_EVENT_PATH")
+          if [[ ! " ${authorized_users[@]} " =~ " ${pr_author} " ]]; then
+            echo "Unauthorized user: $pr_author"
+            echo "::error::Unauthorized user: $pr_author" # Set an error message to fail the pull request status
+            exit 1
           fi
-
-      - name: "Say Hello Mona it's Monday"
-        if: env.AUTHORIZED_USER == 'true'
-        run: echo "Hello Mona. Today is Monday!"
