@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Check Authorization
         run: |
-          authorized_users=("prasad" "john_doe") # Add the GitHub usernames of authorized users here
+          authorized_users=("devi854" "john_doe") # Add the GitHub usernames of authorized users here
           pr_author=$(jq -r ".pull_request.user.login" "$GITHUB_EVENT_PATH")
           if [[ ! " ${authorized_users[@]} " =~ " ${pr_author} " ]]; then
             echo "Unauthorized user: $pr_author"
