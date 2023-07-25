@@ -1,0 +1,12 @@
+name: Greeting on variable day
+
+on:
+  workflow_dispatch
+
+jobs:
+  greeting_job:
+    runs-on: ubuntu-latest
+    if: github.actor == 'devi854' || github.actor == 'prasad' || contains(github.actor, 'team_name/')
+    steps:
+      - name: "Say Hello Mona it's Monday"
+        run: echo "Hello Mona. Today is Monday!"
